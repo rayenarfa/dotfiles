@@ -1,0 +1,17 @@
+#!/bin/bash
+
+DIR="$HOME/Pictures/wallpapers"
+
+WALLPAPER=$(find "$DIR" -type f | sort | rofi -dmenu -i -p "Wallpaper")
+
+# abort if nothing selected
+[ -z "$WALLPAPER" ] && exit 0
+
+feh --bg-fill "$WALLPAPER"
+
+# update state so cycle continues from selection
+INDEX=$(printf "%s\n" "${WALLPAPER}" \
+  | awk '{print NR-1}')
+
+echo "0" > "$HOME/.cache/wallpaper_index"
+ln -sf "$WALLPAPER" "$DIR/current.jpg"

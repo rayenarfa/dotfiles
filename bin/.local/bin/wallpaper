@@ -1,0 +1,16 @@
+#!/bin/bash
+
+DIR="$HOME/Pictures/wallpapers"
+STATE="$HOME/.cache/wallpaper_index"
+
+mapfile -t WALLPAPERS < <(find "$DIR" -type f | sort)
+
+INDEX=0
+[[ -f $STATE ]] && INDEX=$(cat "$STATE")
+
+INDEX=$(( (INDEX + 1) % ${#WALLPAPERS[@]} ))
+
+echo "$INDEX" > "$STATE"
+
+feh --bg-fill "${WALLPAPERS[$INDEX]}"
+ln -sf "${WALLPAPERS[$INDEX]}" "$DIR/current.jpg"
