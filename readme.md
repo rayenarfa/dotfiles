@@ -87,39 +87,43 @@ sudo pacman -S --needed - < packages.txt
 # Install AUR packages (using yay)
 yay -S --needed - < aur-packages.txt
 ```
-
-### 4. Deploy Configurations with GNU Stow
-
-Instead of manually copying files and risking broken configs, this setup uses **GNU Stow** to manage symlinks. Running stow creates clean symbolic links from the repository to your target home directories.
+### 4. Copy Configurations & Scripts to System
+To avoid symlink pollution, manually copy all files from this repository directly into your active system paths:
 
 ```bash
-cd ~/dotfiles
+# 1. Create target directories if they don't exist
+mkdir -p ~/.config/i3
+mkdir -p ~/.local/bin
+mkdir -p ~/scripts
 
-# Stow configurations (links dotfiles/config/i3 -> ~/.config/i3)
-stow config
+# 2. Copy configurations
+cp -r ~/dotfiles/config/i3/config ~/.config/i3/config
 
-# Stow custom bin folder (links dotfiles/bin/.local/bin -> ~/.local/bin)
-stow bin
+# 3. Copy custom wallpaper binaries
+cp -r ~/dotfiles/bin/.local/bin/* ~/.local/bin/
+
+# 4. Copy system helper scripts
+cp -r ~/dotfiles/scripts/* ~/scripts/
 ```
 
-*Note: Make sure to delete or rename any existing `~/.config/i3/config` file before stowing, otherwise Stow will throw a conflict error.*
+### 5. Make Executables & Run Tweaks
+Set executable permissions on the copied files and run the system optimization setup:
 
-### 5. Setup Wallpapers Directory
+```bash
+# Make wallpaper and helper scripts executable on the system
+chmod +x ~/.local/bin/*
+chmod +x ~/scripts/*.sh
 
+# Run services installer from your local scripts folder
+~/scripts/enable-services.sh
+```
+
+### 6. Setup Wallpapers Directory
 The custom wallpaper scripts expect your wallpapers to be located in `~/Pictures/wallpapers/`.
 ```bash
 mkdir -p ~/Pictures/wallpapers
 ```
 Simply place your favorite images there, and the scripts will manage them.
-
-### 6. Enable Services & System Tweaks
-
-Run the included services script to enable system services (Bluetooth, UFW firewall, network management tools, ananicy performance enhancements) and apply swappiness optimizations:
-
-```bash
-chmod +x ~/dotfiles/scripts/*.sh
-~/dotfiles/scripts/enable-services.sh
-```
 
 ---
 
@@ -129,12 +133,12 @@ The `scripts/` and `bin/` directories contain handy utilities to manage system r
 
 | Script Location | Description |
 | :--- | :--- |
-| [`scripts/enable-services.sh`](file:///home/rayen/dotfiles/scripts/enable-services.sh) | Enables essential system services (Bluetooth, firewall, etc.) and sets the power profile to `performance`. |
-| [`scripts/disable-services.sh`](file:///home/rayen/dotfiles/scripts/disable-services.sh) | Disables system-intensive services, sets swappiness to `10`, and sets the power profile to `power-saver` (great for laptops). |
-| [`scripts/enable-turbo.sh`](file:///home/rayen/dotfiles/scripts/enable-turbo.sh) | Turns CPU Intel/AMD Turbo Boost **ON** for maximum performance. |
-| [`scripts/disable-turbo.sh`](file:///home/rayen/dotfiles/scripts/disable-turbo.sh) | Turns CPU Turbo Boost **OFF** to cap frequency, reducing heat and extending battery life. |
-| [`bin/.local/bin/wallpaper`](file:///home/rayen/dotfiles/bin/.local/bin/wallpaper) | Cycles to the next wallpaper in `~/Pictures/wallpapers/` and symlinks it to `current.jpg`. |
-| [`bin/.local/bin/wallpaper-select`](file:///home/rayen/dotfiles/bin/.local/bin/wallpaper-select) | Opens a visual list in `rofi` allowing you to search and select a specific wallpaper. |
+| [`~/scripts/enable-services.sh`](file:///home/rayen/scripts/enable-services.sh) | Enables essential system services (Bluetooth, firewall, etc.) and sets the power profile to `performance`. |
+| [`~/scripts/disable-services.sh`](file:///home/rayen/scripts/disable-services.sh) | Disables system-intensive services, sets swappiness to `10`, and sets the power profile to `power-saver` (great for laptops). |
+| [`~/scripts/enable-turbo.sh`](file:///home/rayen/scripts/enable-turbo.sh) | Turns CPU Intel/AMD Turbo Boost **ON** for maximum performance. |
+| [`~/scripts/disable-turbo.sh`](file:///home/rayen/scripts/disable-turbo.sh) | Turns CPU Turbo Boost **OFF** to cap frequency, reducing heat and extending battery life. |
+| [`~/.local/bin/wallpaper`](file:///home/rayen/.local/bin/wallpaper) | Cycles to the next wallpaper in `~/Pictures/wallpapers/` and symlinks it to `current.jpg`. |
+| [`~/.local/bin/wallpaper-select`](file:///home/rayen/.local/bin/wallpaper-select) | Opens a visual list in `rofi` allowing you to search and select a specific wallpaper. |
 
 ---
 
