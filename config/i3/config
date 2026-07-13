@@ -56,7 +56,7 @@ bindsym $mod+Return exec kitty
 bindsym $mod+b exec firefox
 
 # start a file explorer
-bindsym $mod+Shift+f exec dolphin
+bindsym $mod+Shift+f exec thunar
 
 
 # kill focused window
