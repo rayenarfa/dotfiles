@@ -21,7 +21,7 @@ Before using these dotfiles, ensure you have the following installed:
 
 1.  **Clone the repository**:
     ```bash
-    git clone https://github.com/yourusername/dotfiles.git
+    git clone https://github.com/rayenarfa/dotfiles.git
     cd dotfiles
     ```
 
