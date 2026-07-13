@@ -1,6 +1,6 @@
 # Dotfiles for Arch Linux
 
-![Arch Linux Logo](https://toppng.com/uploads/preview/arch-linux-logo-arch-linux-11562915682mxfu99tp6t.png)
+![Arch Linux Logo](arch-linux-logo.png)
 
 This repository contains my personal configuration files for Arch Linux, focusing on a lightweight and customizable setup with the i3 window manager.
 
